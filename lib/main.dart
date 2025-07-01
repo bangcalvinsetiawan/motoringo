@@ -708,58 +708,145 @@ class HomeScreen extends StatelessWidget {
   Widget _buildMembershipCard() {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Color(0xFF232323),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Color(0xFF333333)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(
-              Icons.card_membership,
-              color: Colors.orange,
-              size: 32,
-            ),
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Gold Member',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontFamily: 'Roboto',
-                  ),
-                ),
-                Text(
-                  '1,250 points • 15% discount',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white70,
-                    fontFamily: 'Roboto',
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.white38,
-            size: 16,
+        gradient: LinearGradient(
+          colors: [Color(0xFFFFD700), Color(0xFFFFE55C)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.amber.withOpacity(0.2),
+            blurRadius: 12,
+            offset: Offset(0, 6),
           ),
         ],
       ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(Icons.card_membership, color: Color(0xFFFFB300), size: 32),
+              ),
+              SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Gold Member',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontFamily: 'Roboto',
+                      ),
+                    ),
+                    Text(
+                      'Member since Jan 2023',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.black54,
+                        fontFamily: 'Roboto',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(Icons.verified, color: Color(0xFFFFB300), size: 28),
+            ],
+          ),
+          SizedBox(height: 18),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildBenefitIcon(Icons.star, '1,250', 'Points'),
+              _buildBenefitIcon(Icons.discount, '15%', 'Discount'),
+              _buildBenefitIcon(Icons.build, '12', 'Services'),
+            ],
+          ),
+          SizedBox(height: 18),
+          LinearProgressIndicator(
+            value: 0.75,
+            backgroundColor: Colors.black12,
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFFB300)),
+            minHeight: 8,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '750 points to Platinum',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.black54,
+                  fontFamily: 'Roboto',
+                ),
+              ),
+              Text(
+                'Platinum',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Color(0xFFB3A369),
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Roboto',
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBenefitIcon(IconData icon, String value, String label) {
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.amber.withOpacity(0.08),
+                blurRadius: 6,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Icon(icon, color: Color(0xFFFFB300), size: 22),
+        ),
+        SizedBox(height: 4),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            fontFamily: 'Roboto',
+          ),
+        ),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 11,
+            color: Colors.black54,
+            fontFamily: 'Roboto',
+          ),
+        ),
+      ],
     );
   }
 
@@ -1581,22 +1668,48 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              Icon(
+                Icons.verified,
+                color: Colors.black,
+                size: 28,
+              ),
             ],
           ),
           SizedBox(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildMembershipStat('Points', '1,250'),
-              _buildMembershipStat('Discount', '15%'),
-              _buildMembershipStat('Services', '12'),
+              Icon(Icons.stars, color: Colors.black, size: 22),
+              SizedBox(width: 8),
+              Text(
+                '1,250 Points',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontFamily: 'Roboto',
+                ),
+              ),
+              SizedBox(width: 12),
+              Expanded(
+                child: LinearProgressIndicator(
+                  value: 0.625, // 1250/2000 for example
+                  backgroundColor: Colors.black12,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                  minHeight: 8,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              SizedBox(width: 8),
+              Text(
+                'Platinum',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.black54,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ],
-          ),
-          SizedBox(height: 16),
-          LinearProgressIndicator(
-            value: 0.75,
-            backgroundColor: Colors.black26,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
           ),
           SizedBox(height: 8),
           Text(
@@ -1607,29 +1720,47 @@ class ProfileScreen extends StatelessWidget {
               fontFamily: 'Roboto',
             ),
           ),
+          SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildBenefitIcon(Icons.percent, '15%\nDiscount'),
+              _buildBenefitIcon(Icons.build, '12\nServices'),
+              _buildBenefitIcon(Icons.card_giftcard, 'Special\nGifts'),
+            ],
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildMembershipStat(String label, String value) {
+  Widget _buildBenefitIcon(IconData icon, String label) {
     return Column(
       children: [
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-            fontFamily: 'Roboto',
+        Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 4,
+              ),
+            ],
           ),
+          child: Icon(icon, color: Color(0xFFFFB300), size: 22),
         ),
+        SizedBox(height: 6),
         Text(
           label,
+          textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 12,
-            color: Colors.black54,
+            color: Colors.black87,
             fontFamily: 'Roboto',
+            fontWeight: FontWeight.w500,
+            height: 1.2,
           ),
         ),
       ],
