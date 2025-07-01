@@ -2341,8 +2341,8 @@ class _MotorcycleListScreenState extends State<MotorcycleListScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: _addMotorcycle,
         backgroundColor: Colors.orange,
-        child: Icon(Icons.add, color: Colors.black),
         tooltip: 'Input New Motor',
+        child: Icon(Icons.add, color: Colors.black),
       ),
       backgroundColor: Colors.black,
     );
